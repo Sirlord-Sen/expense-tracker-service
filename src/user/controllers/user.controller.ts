@@ -1,6 +1,7 @@
-import { Controller, Post, Res, Body, Get, Req } from '@nestjs/common'
+import { Controller, Post, Res, Body, Get, Req, UseGuards } from '@nestjs/common'
 import { Response } from 'express'
 import { AuthPayload } from 'src/auth/dtos/auth.dto'
+import { JwtAuthGuard } from 'src/auth/jwt.guard'
 import { TokenService } from 'src/auth/services/token.service'
 import { ValidationPipe } from 'src/common/pipes/validation.pipe'
 import { CreateUserDto, UserPayload } from '../dtos/user.dto'
@@ -29,17 +30,17 @@ export class UserController {
     }
 
     @Get('/')
-    async getUser(@Res() res, @Req() req)
-    // : Promise<UserPayload>
-    {
+    @UseGuards(JwtAuthGuard)
+    async getUser(@Req() req) : Promise<UserPayload> {
         const { userId } = req.user
         const user = await this.userService.findCurrentUser({id: userId})
-        return res.json({
+
+        return {
             message: "Current User",
             data: {
                 user: user
             }
-        })
+        }
     }
 
 }
