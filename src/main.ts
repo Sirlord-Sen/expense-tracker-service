@@ -36,6 +36,9 @@ async function bootstrap() {
     module.hot.dispose(() => app.close());
   }
 
-  await app.listen(3000);
+  const port = process.env.PORT
+  await app.listen(port, ()=> {
+    console.log('Server running')
+  });
 }
 bootstrap();
