@@ -14,7 +14,7 @@ dotenv.config();
   controllers: [AuthController],
   providers: [AuthService],
   imports: [
-    TypeOrmModule.forFeature([RefreshTokenRepository]),
+    // TypeOrmModule.forFeature([RefreshTokenRepository]),
   ],
   exports: [AuthService],
 })
