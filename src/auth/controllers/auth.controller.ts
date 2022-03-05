@@ -1,4 +1,5 @@
 import { Controller, Post, Res, Body, Req, UseGuards } from '@nestjs/common'
+import { ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 import { ValidationPipe } from 'src/common/pipes/validation.pipe'
 import { AuthPayload, LoginUserDto } from '../dtos/auth.dto';
@@ -6,6 +7,7 @@ import { JwtAuthGuard } from '../jwt.guard';
 import { AuthService } from '../services/auth.service';
 import { TokenService } from '../services/token.service';
 
+@ApiTags('Authentication')
 @Controller('/api/v1/auth')
 export class AuthController {
     constructor(
