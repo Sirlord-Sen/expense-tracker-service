@@ -1,5 +1,5 @@
 import { IsString, IsNotEmpty } from 'class-validator'
-import { ISafeUser } from '../interfaces/user.interface'
+import { ISafeUser, IUser } from '../interfaces/user.interface'
 
 export class CreateUserDto{
     @IsNotEmpty()
@@ -23,7 +23,11 @@ export class CreateUserDto{
     password: string
 }
 
+class UserData{
+    user: ISafeUser
+}
+
 export class UserPayload{
     message: string
-    user: ISafeUser
+    data?: UserData
 }
