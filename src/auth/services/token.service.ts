@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm"
 import { IUser } from "src/user/interfaces/user.interface";
-import { IAccessToken, ITokens, TokenType } from "../interfaces/token.interface";
+import { IAccessToken, IFullRefreshToken, IRefreshToken, ITokens, TokenType } from "../interfaces/token.interface";
 import { RefreshTokenRepository } from "../repository/refreshToken.repository";
 import { JwtService } from "@nestjs/jwt"
 import { SignOptions } from 'jsonwebtoken'
@@ -58,5 +58,9 @@ export class TokenService {
         ])
 
         return { tokenType: TokenType.BEARER, expiresAt, accessToken, refreshToken};
+    }
+
+    async update(query: Partial<IFullRefreshToken>, body: Partial<IRefreshToken>): Promise<void>{
+        await this.refreshTokenRepository.updateRefreshToken(query, body)
     }
 }    

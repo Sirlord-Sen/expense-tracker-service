@@ -10,7 +10,8 @@ import { verify } from 'argon2'
 @Injectable()
 export class UserService {
     constructor(
-        @InjectRepository(UserRepository) private userRepository: UserRepository,
+        @InjectRepository(UserRepository) 
+        private userRepository: UserRepository,
     ) {}
 
     async signup(data: ICreateUser): Promise<ISafeUser> {

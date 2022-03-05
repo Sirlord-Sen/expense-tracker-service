@@ -17,3 +17,13 @@ export interface IRefreshToken {
     jti: string;
     userId: string;
 }
+
+export interface IFullRefreshToken{
+    id?:string
+    expiredAt?: Date;
+    isRevoked?: boolean;
+    jti?: string;
+    userId?: string;
+    created_at?: Date
+    updated_At?: Date
+}

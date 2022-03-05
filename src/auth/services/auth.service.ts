@@ -5,6 +5,7 @@ import { RefreshTokenRepository } from "../repository/refreshToken.repository";
 import { pick } from 'lodash'
 import { UserService } from "src/user/services/user.service";
 import { ILogin } from "../interfaces/auth.interface";
+import { TokenService } from "./token.service";
 
 
 @Injectable()
@@ -13,7 +14,8 @@ export class AuthService {
     constructor(
         @InjectRepository(RefreshTokenRepository) 
         private refreshTokenRepository: RefreshTokenRepository,
-        private userService: UserService
+        private userService: UserService,
+        private tokenService: TokenService
     ) {}
 
     async login(data: ILogin): Promise<ISafeUser> {
@@ -22,5 +24,9 @@ export class AuthService {
         const validate = await this.userService.validateLoginCredentials(user, password)
         if(!validate) throw new UnauthorizedException("Invalid Login Credentials")
         return pick(user, ["id", "username", "email", "firstname", "surname"])
+    }
+
+    async logout(id:string): Promise<void>{
+        await this.tokenService.update({ userId : id } , {isRevoked: true });
     }
 }    
