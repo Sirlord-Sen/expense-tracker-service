@@ -6,7 +6,7 @@ import { typeOrmConfig } from 'config/typeorm.config';
 
 @Module({
   imports: [
-    // AuthModule,
+    AuthModule,
     UserModule,
     TypeOrmModule.forRoot(typeOrmConfig)
   ],
