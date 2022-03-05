@@ -7,13 +7,14 @@ import { RefreshTokenRepository } from './repository/refreshToken.repository';
 import { AuthService } from './services/auth.service';
 import * as dotenv from 'dotenv';
 import { JwtStrategy } from './jwt.strategy';
+import { TokenService } from './services/token.service';
 
 dotenv.config();
 
 @Global()
 @Module({
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy],
+  providers: [AuthService, TokenService ,JwtStrategy],
   imports: [
     PassportModule,
     JwtModule.register({
@@ -21,6 +22,7 @@ dotenv.config();
       signOptions: {expiresIn: process.env.JWT_EXPIRATION}
     }),
     TypeOrmModule.forFeature([RefreshTokenRepository]),
-  ]
+  ],
+  exports: [TokenService]
 })
 export class AuthModule {}

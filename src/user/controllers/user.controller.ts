@@ -14,25 +14,22 @@ export class UserController {
     ){}  
 
     @Post('/signup')
-    async signup(
-        @Res() res: Response, 
-        @Body(new ValidationPipe()) body: CreateUserDto
-        )
-        // :Promise<AuthPayload> 
+    async signup(@Body(new ValidationPipe()) body: CreateUserDto):Promise<AuthPayload>
         {
         const user = await this.userService.signup(body)
-        const tokens = await this.tokenService.getTokens(body)
-        return res.json({
+        const tokens = await this.tokenService.getTokens(user)
+    
+        return {
             message: "User Created",
             data: {
                 user: user,
                 tokens: tokens
             }
-        })
+        }
     }
 
     @Get('/')
-    async getUser(@Res() res: Response, @Req() req)
+    async getUser(@Res() res, @Req() req)
     // : Promise<UserPayload>
     {
         const { userId } = req.user

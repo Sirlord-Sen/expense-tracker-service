@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm"
 import { User } from "../entity/user.entity";
-import { ISafeUser, IUser } from "../interfaces/user.interface";
+import { ICreateUser, ISafeUser, IUser } from "../interfaces/user.interface";
 import { UserRepository } from "../repository/user.repository";
 import { pick } from 'lodash'
 
@@ -11,9 +11,9 @@ export class UserService {
         @InjectRepository(UserRepository) private userRepository: UserRepository,
     ) {}
 
-    async signup(data: any): Promise<any> {
+    async signup(data: ICreateUser): Promise<ISafeUser> {
         const user = await this.userRepository.createUser(data)
-        return user
+        return pick(user, ["id", "username", "email", "firstname", "surname"])
     }
 
     async findOne(query: Partial<IUser>): Promise<User>{

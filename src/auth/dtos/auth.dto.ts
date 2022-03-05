@@ -14,7 +14,7 @@ export class LoginUserDto{
 
 export class AuthPayload{
     message: string
-    data?: Authentication
+    data: Authentication
 }
 
 class Authentication{

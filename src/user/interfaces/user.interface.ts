@@ -16,3 +16,11 @@ export interface IUser{
     created_at?: Date
     updated_at?: Date
 }
+
+export interface ICreateUser{
+    username?: string
+    email?: string
+    firstname?: string
+    surname?: string
+    password?:string
+}
