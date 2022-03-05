@@ -6,16 +6,21 @@ import { AuthController } from './controllers/auth.controller';
 import { RefreshTokenRepository } from './repository/refreshToken.repository';
 import { AuthService } from './services/auth.service';
 import * as dotenv from 'dotenv';
+import { JwtStrategy } from './jwt.strategy';
 
 dotenv.config();
 
 @Global()
 @Module({
   controllers: [AuthController],
-  providers: [AuthService],
+  providers: [AuthService, JwtStrategy],
   imports: [
+    PassportModule,
+    JwtModule.register({
+      secret: process.env.JWT_SECRET,
+      signOptions: {expiresIn: process.env.JWT_EXPIRATION}
+    }),
     TypeOrmModule.forFeature([RefreshTokenRepository]),
-  ],
-  exports: [AuthService],
+  ]
 })
 export class AuthModule {}

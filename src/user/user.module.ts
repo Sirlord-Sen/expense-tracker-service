@@ -7,7 +7,7 @@ import * as dotenv from 'dotenv';
 
 dotenv.config();
 
-// @Global()
+@Global()
 @Module({
   controllers: [UserController],
   providers: [UserService],
