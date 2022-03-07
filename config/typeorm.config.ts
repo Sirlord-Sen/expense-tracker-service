@@ -6,11 +6,11 @@ import { Expense } from 'src/expense/entity/expense.entity';
 import { Balance } from 'src/expense/entity/balance.entity';
 
 export const typeOrmConfig: TypeOrmModuleOptions = {
-  host: process.env.DB_HOST,
-  username: process.env.DB_USERNAME,
-  password: process.env.DB_PASSWORD,
-  port: 5432,
-  database: 'widget-demo-app',
+  // host: process.env.DB_HOST,
+  // username: process.env.DB_USERNAME,
+  // password: process.env.DB_PASSWORD,
+  // port: 5432,
+  // database: 'widget-demo-app',
 
   synchronize: true,
   entities: [User, RefreshToken, Expense, Balance],
@@ -18,9 +18,9 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
   type: 'postgres',
 
 
-  // url: process.env.DATABASE_URL,
-  // ssl: true,
-  // extra: {
-  //   ssl: { rejectUnauthorized: false },
-  // },
+  url: process.env.DATABASE_URL,
+  ssl: true,
+  extra: {
+    ssl: { rejectUnauthorized: false },
+  },
 };
