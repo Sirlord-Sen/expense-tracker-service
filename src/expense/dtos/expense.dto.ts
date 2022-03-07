@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { IsString, IsNotEmpty, IsNumber } from 'class-validator'
 import { ISafeUser } from 'src/user/interfaces/user.interface'
+import { Expense } from '../entity/expense.entity'
 // import { ISafeUser, IUser } from '../interfaces/user.interface'
 
 export class CreateExpenseDto{
@@ -15,18 +16,18 @@ export class CreateExpenseDto{
     category: 'food' | 'transportation' | 'clothes' | 'accommodation' | 'entertainment'
 }
 
-// class ExpenseData{
-//     @ApiProperty()
-//     user: ISafeUser
+class ExpenseData{
+    @ApiProperty()
+    expense: Expense
 
-//     @ApiProperty()
-//     expenses: 
-// }
+    @ApiProperty()
+    balance: number
+}
 
-// export class UserPayload{
-//     @ApiProperty()
-//     message: string
+export class ExpensePayload{
+    @ApiProperty()
+    message: string
 
-//     @ApiProperty()
-//     data?: UserData
-// }
+    @ApiProperty()
+    data?: ExpenseData
+}

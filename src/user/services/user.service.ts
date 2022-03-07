@@ -21,7 +21,7 @@ export class UserService {
     }
 
     async findOne(query: Partial<IUser>): Promise<User>{
-        try{ return await this.userRepository.findOneOrFail({ where: query });}
+        try{ return await this.userRepository.findOneOrFail({ where: query , relations: ["balance"]});}
         catch(err){ throw new NotFoundException(`User not with ${query} not found`) }
     }
 

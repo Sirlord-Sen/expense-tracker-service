@@ -1,7 +1,9 @@
-import { Body, Controller, Post } from "@nestjs/common";
+import { Body, Controller, Post, Req, UseGuards } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
+import { JwtAuthGuard } from "src/auth/jwt.guard";
 import { ValidationPipe } from "src/common/pipes/validation.pipe";
-import { CreateExpenseDto } from "../dtos/expense.dto";
+import { CreateExpenseDto, ExpensePayload } from "../dtos/expense.dto";
+import { BalanceService } from "../services/balance.service";
 import { ExpenseService } from "../services/expense.service";
 
 @ApiTags('Expenses Actions')
@@ -9,11 +11,21 @@ import { ExpenseService } from "../services/expense.service";
 export class ExpenseController{
     constructor(
         private expenseService: ExpenseService,
+        private balanceService: BalanceService
     ){}
     
     @Post('/create')
-    async createExpense(@Body(new ValidationPipe()) body: CreateExpenseDto){
-        const expense = await this.expenseService.createExpense(body)
-        return expense
+    @UseGuards(JwtAuthGuard)
+    async createExpense(@Req() req, @Body(new ValidationPipe()) body: CreateExpenseDto): Promise<ExpensePayload>{
+        const { userId } = req.user
+        const expense = await this.expenseService.createExpense(body, userId)
+        const balance = await this.balanceService.updateBalance(expense, userId)
+        return {
+            message: "Expense Created",
+            data: {
+                balance: balance.balance,
+                expense
+            }
+        }
     }
 }
