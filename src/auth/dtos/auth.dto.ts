@@ -20,6 +20,9 @@ class Authentication{
     user?: ISafeUser
 
     @ApiProperty()
+    balance?: number
+
+    @ApiProperty()
     tokens?: ITokens
 } 
 

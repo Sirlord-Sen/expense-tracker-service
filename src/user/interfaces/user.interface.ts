@@ -1,9 +1,16 @@
+import { Balance } from "src/expense/entity/balance.entity"
+
 export interface ISafeUser{
     id?: string
     username: string
     email: string
     firstname: string
     surname: string
+}
+
+export interface ILoginPayload{
+    user: ISafeUser,
+    balance: Balance
 }
 
 export interface IUser{

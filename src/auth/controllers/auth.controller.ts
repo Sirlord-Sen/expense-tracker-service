@@ -17,13 +17,14 @@ export class AuthController {
 
     @Post('/login')
     async login(@Body(new ValidationPipe()) body: LoginUserDto):Promise<AuthPayload> {
-        const user = await this.authservice.login(body)
+        const { user, balance } = await this.authservice.login(body)
         const tokens = await this.tokenService.getTokens(user)
         return {
             message: "Login Successful",
             data: {
-                user: user,
-                tokens: tokens
+                user,
+                balance: balance.balance,
+                tokens
             }
         }     
     }
