@@ -22,9 +22,6 @@ export class Expense extends BaseEntity{
     @Column()
     category: 'food' | 'transportation' | 'clothes' | 'accommodation' | 'entertainment'
 
-    @ManyToOne(() => User, user => user.expenses)
-    user: User
-
     @ManyToOne(() => Balance, balance => balance.expenses)
     balance: Balance
 

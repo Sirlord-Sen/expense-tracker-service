@@ -6,6 +6,7 @@ import { UserRepository } from "../repository/user.repository";
 import { pick } from 'lodash'
 import { ILogin } from "src/auth/interfaces/auth.interface";
 import { verify } from 'argon2'
+import { Balance } from "src/expense/entity/balance.entity";
 
 @Injectable()
 export class UserService {
@@ -14,8 +15,8 @@ export class UserService {
         private userRepository: UserRepository,
     ) {}
 
-    async signup(data: ICreateUser): Promise<ISafeUser> {
-        const user = await this.userRepository.createUser(data)
+    async signup(data: ICreateUser, balance: Balance): Promise<ISafeUser> {
+        const user = await this.userRepository.createUser(data, balance)
         return pick(user, ["id", "username", "email", "firstname", "surname"])
     }
 

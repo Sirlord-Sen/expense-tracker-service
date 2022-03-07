@@ -1,3 +1,4 @@
+import { User } from 'src/user/entity/user.entity'
 import { 
     Entity, 
     BaseEntity,
@@ -5,7 +6,8 @@ import {
     CreateDateColumn, 
     UpdateDateColumn, 
     Column,
-    OneToMany
+    OneToMany,
+    OneToOne
 } from 'typeorm'
 import { Expense } from './expense.entity'
 
@@ -15,10 +17,10 @@ export class Balance extends BaseEntity{
     id: string
 
     @Column({default: 1000})
-    total: number
+    total?: number
 
-    @Column()
-    balance: number
+    @Column({default: 1000})
+    balance?: number
 
     @OneToMany(() => Expense, expenses => expenses.balance)
     expenses: Expense[] 

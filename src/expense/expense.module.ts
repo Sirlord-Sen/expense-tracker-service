@@ -1,16 +1,18 @@
 import { Global, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ExpenseController } from './controllers/expense.controllers';
-import { Balance } from './entity/balance.entity';
-import { Expense } from './entity/expense.entity';
+import { BalanceRepository } from './repository/balance.repository';
+import { ExpenseRepository } from './repository/expense.repository';
+import { BalanceService } from './services/balance.service';
+import { ExpenseService } from './services/expense.service';
 
 @Global()
 @Module({
   controllers: [ ExpenseController ],
-  providers: [],
+  providers: [ ExpenseService, BalanceService ],
   imports: [
-    TypeOrmModule.forFeature([Expense, Balance]),
+    TypeOrmModule.forFeature([ExpenseRepository, BalanceRepository]),
   ],
-  exports: [],
+  exports: [BalanceService],
 })
 export class ExpenseModule {}
