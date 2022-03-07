@@ -24,10 +24,26 @@ class ExpenseData{
     balance: number
 }
 
+class ExpensesData{
+    @ApiProperty()
+    expenses: Expense[]
+
+    @ApiProperty()
+    balance: number
+}
+
 export class ExpensePayload{
     @ApiProperty()
     message: string
 
     @ApiProperty()
     data?: ExpenseData
+}
+
+export class AllExpensesPayload{
+    @ApiProperty()
+    message: string
+
+    @ApiProperty()
+    data?: ExpensesData
 }

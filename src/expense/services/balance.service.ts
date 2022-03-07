@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm"
 import { UserService } from "src/user/services/user.service";
 import { Balance } from "../entity/balance.entity";
 import { Expense } from "../entity/expense.entity";
-import { IBalance } from "../interfaces/balance.interface";
+import { IAllExpenses, IBalance } from "../interfaces/balance.interface";
 import { BalanceRepository } from "../repository/balance.repository";
 
 @Injectable()
@@ -20,6 +20,17 @@ export class BalanceService {
 
     async findOne(query: Partial<IBalance>): Promise<Balance>{
        try{ return this.balanceRepository.findOneOrFail({where: query, relations: ["expenses"]})} 
+       catch(e){ throw new InternalServerErrorException() }
+    }
+
+    async findAll(query: Partial<IBalance>): Promise<IAllExpenses>{
+        try{ 
+            const userBalance = (await this.userService.findOne(query)).balance
+            const balance = await this.balanceRepository.findOneOrFail({where: {id:userBalance.id}, relations: ["expenses"]})
+            const expenses = balance.expenses
+            delete balance.expenses
+            return { balance, expenses }
+        } 
        catch(e){ throw new InternalServerErrorException() }
     }
 

@@ -1,3 +1,4 @@
+import { Balance } from "../entity/balance.entity"
 import { Expense } from "../entity/expense.entity"
 
 export interface IBalance{
@@ -7,4 +8,9 @@ export interface IBalance{
     expense?: Expense
     created_at?:Date
     update_at?:Date
+}
+
+export interface IAllExpenses{
+    expenses: Expense[],
+    balance: Partial<Balance>
 }
