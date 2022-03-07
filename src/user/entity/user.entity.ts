@@ -1,3 +1,4 @@
+import { Expense } from 'src/expense/entity/expense.entity';
 import { 
     BaseEntity,
     Entity, 
@@ -5,7 +6,8 @@ import {
     Column, 
     CreateDateColumn,
     UpdateDateColumn,
-    Unique 
+    Unique, 
+    OneToMany
 } from 'typeorm';
 
 @Entity()
@@ -28,6 +30,9 @@ export class User extends BaseEntity {
 
     @Column()
     password: string
+
+    @OneToMany(() => Expense, expenses => expenses.user)
+    expenses: Expense[] 
 
     @Column('text', { nullable: true })
     confirmTokenPassword?: string;
