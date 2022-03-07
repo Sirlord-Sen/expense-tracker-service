@@ -20,7 +20,7 @@ export class BalanceService {
 
     async findOne(query: Partial<IBalance>): Promise<Balance>{
        try{ return this.balanceRepository.findOneOrFail({where: query, relations: ["expenses"]})} 
-       catch(e){ throw new InternalServerErrorException() }
+       catch(e){ throw new NotFoundException() }
     }
 
     async findAll(query: Partial<IBalance>): Promise<IAllExpenses>{
@@ -31,7 +31,7 @@ export class BalanceService {
             delete balance.expenses
             return { balance, expenses }
         } 
-       catch(e){ throw new InternalServerErrorException() }
+       catch(e){ throw new NotFoundException() }
     }
 
     async updateBalance(expense: Expense, userId: string){
